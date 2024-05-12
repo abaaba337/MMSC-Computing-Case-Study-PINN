@@ -127,7 +127,7 @@ class ODE_PINN_SOFTBC(nn.Module):
             D1y_hat_l = torch.autograd.grad(y_hat_l, self.xl, torch.ones_like(y_hat_l), create_graph=True)[0]
             D1y_hat_u = torch.autograd.grad(y_hat_u, self.xu, torch.ones_like(y_hat_u), create_graph=True)[0]
             
-            Lb1 = (self.lambdas[1] * ( y_hat_l +  D1y_hat_u - self.BC[1] )**2).squeeze()
+            Lb1 = (self.lambdas[1] * ( y_hat_l +  D1y_hat_l - self.BC[1] )**2).squeeze()
             Lb2 = (self.lambdas[2] * ( D1y_hat_u - self.BC[2] )**2).squeeze()
         
         return Lp + Lb1 + Lb2
